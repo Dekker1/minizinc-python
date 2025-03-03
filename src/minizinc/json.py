@@ -81,6 +81,7 @@ def decode_json_stream(byte_stream: bytes, cls=None, **kw):
         line = line.strip()
         if line != b"":
             try:
+                line = line.replace(b"inf", b"\"Infinity\"")
                 obj = loads(line, cls=cls, **kw)
             except JSONDecodeError as e:
                 raise MiniZincError(
@@ -108,6 +109,7 @@ async def decode_async_json_stream(
             if buffer == b"":
                 continue
             try:
+                buffer = buffer.replace(b"inf", b"\"Infinity\"")
                 obj = loads(buffer, cls=cls, **kw)
             except JSONDecodeError as e:
                 raise MiniZincError(

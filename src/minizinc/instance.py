@@ -644,6 +644,7 @@ class Instance(Model):
                 # Parse and output the remaining statistics and status messages
                 if remainder != b"":
                     try:
+                        remainder = remainder.replace(b"inf", b"\"Infinity\"")
                         obj = json.loads(
                             remainder,
                             cls=MZNJSONDecoder,
